@@ -1,0 +1,191 @@
+{
+    "Freshman": {
+        "Fall": [
+            {
+                "course": "PHYS 120",
+                "credit": "1",
+                "fulfill": ["PHYS", "Q"]
+            },
+            {
+                "course": "KINS 197",
+                "credit": "1",
+                "fulfill": ["GRAD"]
+            },
+            {
+                "course": "ENG 151",
+                "credit": "1",
+                "fulfill": ["AH"]
+            },
+            {
+                "course": "ECON 100",
+                "credit": "1",
+                "fulfill": ["SS", "MOFO"]
+            }
+        ],
+        "Spring": [
+            {
+                "course": "ECON 220",
+                "credit": "1",
+                "fulfill": ["MOFO"]
+            },
+            {
+                "course": "PHYS 130",
+                "credit": "1",
+                "fulfill": ["PHYS", "Q"]
+            },
+            {
+                "course": "HONREXPA",
+                "credit": "0.5",
+                "fulfill": ["MOFO"]
+            },
+            {
+                "course": "CSC 122",
+                "credit": "1",
+                "fulfill": ["CS", "Q"]
+            }
+        ]
+    },
+    "Sophomore": {
+        "Fall": [
+            {
+                "course": "CSC 231",
+                "credit": "1",
+                "fulfill": ["CS", "Q"]
+            },
+            {
+                "course": "MATH 152",
+                "credit": "1",
+                "fulfill": ["PHYS"]
+            },
+            {
+                "course": "PHYS 210",
+                "credit": "1",
+                "fulfill": ["PHYS"]
+            },
+            {
+                "course": "PHIL 230",
+                "credit": "1",
+                "fulfill": ["MOFO", "AH", "W"]
+            }
+        ],
+        "Spring": [
+            {
+                "course": "ECON 350",
+                "credit": "1",
+                "fulfill": ["MOFO"]
+            },
+            {
+                "course": "ECON 393",
+                "credit": "1",
+                "fulfill": ["MOFO"]
+            },
+            {
+                "course": "PHYS 220",
+                "credit": "1",
+                "fulfill": ["PHYS", "Q"]
+            },
+            {
+                "course": "CSC 232",
+                "credit": "1",
+                "fulfill": ["CS"]
+            },
+            {
+                "course": "CSC 240",
+                "credit": "0.5",
+                "fulfill": ["CS"]
+            }
+        ]
+    },
+    "Junior": {
+        "Fall": [
+            {
+                "course": "HONR 310",
+                "credit": "1",
+                "fulfill": ["MOFO"]
+            },
+            {
+                "course": "HONR 320",
+                "credit": "2",
+                "fulfill": ["MOFO"]
+            }
+        ],
+        "Spring": [
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            }
+        ]
+    },
+    "Senior": {
+        "Fall": [
+            {
+                "course": "courseName",
+                "credit": "0.5",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            }
+        ],
+        "Spring": [
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "1",
+                "fulfill": ["program"]
+            },
+            {
+                "course": "courseName",
+                "credit": "0.5",
+                "fulfill": ["program"]
+            }
+        ]
+    }
+}
