@@ -115,14 +115,14 @@ const NavBar = (props) => {
 						About
 					</a>
 					<a className="flex-shrink-0 pl-4 text-gray-900" href="/">
-						Blog
+						Combination
 					</a>
-					<a className="flex-shrink-0 pl-4 text-gray-900" href="/">
+					{/* <a className="flex-shrink-0 pl-4 text-gray-900" href="/">
 						Projects
 					</a>
 					<a className="flex-shrink-0 pl-4 text-gray-900" href="/">
 						Contact
-					</a>
+					</a> */}
 				</nav>
 			</div>
 		</header>

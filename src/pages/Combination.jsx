@@ -4,7 +4,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { db, endPoint } from "../api/config"
 import axios from "axios";
-import { collection, getDocs, doc, getDoc, get, getDocFromCache, getDocsFromCache } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, getDocFromCache, getDocsFromCache } from "firebase/firestore";
 import { useCallback } from "react";
 
 const Combination = (props) => {
@@ -61,22 +61,34 @@ const Combination = (props) => {
 	};
 
 	const fetchDocFromCollection = async (db, colName, docName, setStateFunc) => {
-		const docSnap = await getDoc(doc(db, colName, docName))
-		if (docSnap.exists()) {
-			setStateFunc(docSnap.data())
+		const docSnapFromCache = await getDocFromCache(doc(db, colName, docName))
+		if (docSnapFromCache.exists()) {
+			setStateFunc(docSnapFromCache.data())
 		}
-		else console.log(`Document ${docName} does not exist in collection ${colName}`)
+		else {
+			const docSnap = await getDoc(doc(db, colName, docName))
+			if (docSnap.exists()) setStateFunc(docSnapFromCache.data())
+			else
+				console.log(`Document ${docName} does not exist in collection ${colName}`)
+		}
 	}
 
 	const fetchAllDocsFromCollection = async (db, colName, setStateFunc) => {
-		const querySnapShot = await getDocs(collection(db, colName))
+		const querySnapShotFromCache = await getDocsFromCache(collection(db, colName))
 		const tempObj = {}
-		querySnapShot.forEach((doc) => {
-			tempObj[doc.id] = doc.data()
-		})
+		if (!querySnapShotFromCache.empty) {
+			querySnapShotFromCache.forEach((doc) => {
+				tempObj[doc.id] = doc.data()
+			})
+		} else {
+			const querySnapShot = await getDocs(collection(db, colName))
+			querySnapShot.forEach((doc) => {
+				tempObj[doc.id] = doc.data()
+			})
+		}
 		setStateFunc(tempObj)
 	}
-	
+
 	// Retrieve data as fields of the dropdowns from Firestore
 	useEffect(() => {
 		// fetchDocFromCollection(db, "degreeIds", "Majors", setMajorIds);
@@ -165,10 +177,10 @@ const Combination = (props) => {
 			"Mathematics": 47620
 		})
 		// fetchAllDocsFromCollection(db, "honors", setHonorList);
-		setHonorList({"Environmental Fellows":1, "Honor Scholars":2, "Management Fellows":3, "Media Fellows":4, "Science Research Fellows":5})
+		setHonorList({ "Environmental Fellows": 1, "Honor Scholars": 2, "Management Fellows": 3, "Media Fellows": 4, "Science Research Fellows": 5 })
 		fetchAllDocsFromCollection(db, "courses", setCourses);
 	}, [])
-	
+
 
 	const submit = useCallback(() => {
 		const data = {
@@ -199,6 +211,34 @@ const Combination = (props) => {
 
 	}, [completedCourses, honors, waivedCourses, majors, minors, international, semSelected])
 
+	const dropdownLs = {
+		"Majors": {
+			'selected': majors,
+			'setSelected': setMajors,
+			'items': majorIds,
+		},
+		"Minors": {
+			'selected': minors,
+			'setSelected': setMinors,
+			'items': minorIds,
+		},
+		"Honor Programs": {
+			'selected': honors,
+			'setSelected': setHonors,
+			'items': honorList,
+		},
+		"Waived Courses": {
+			'selected': waivedCourses,
+			'setSelected': setWaivedCourses,
+			'items': courses,
+		},
+		"Completed Courses": {
+			'selected': completedCourses,
+			'setSelected': setCompletedCourses,
+			'items': courses,
+		},
+	}
+
 
 	return (
 		<div className="h-screen">
@@ -217,56 +257,20 @@ const Combination = (props) => {
 					</div>
 					<div className="mt-10">
 
-						<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
-							<h4 className="text-right font-medium  pt-1">
-								Majors
-							</h4>
-							<Dropdown
-								selected={majors}
-								setSelected={setMajors}
-								items={majorIds}
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
-							<h4 className="text-right font-medium pt-1">
-								Minors
-							</h4>
-							<Dropdown
-								selected={minors}
-								setSelected={setMinors}
-								items={minorIds}
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
-							<h4 className="text-right font-medium pt-1">
-								Honor Programs
-							</h4>
-							<Dropdown
-								selected={honors}
-								setSelected={setHonors}
-								items={honorList}
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
-							<h4 className="text-right font-medium pt-1">
-								Waived Courses
-							</h4>
-							<Dropdown
-								selected={waivedCourses}
-								setSelected={setWaivedCourses}
-								items={courses}
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
-							<h4 className="text-right font-medium pt-1">
-								Completed Courses
-							</h4>
-							<Dropdown
-								selected={completedCourses}
-								setSelected={setCompletedCourses}
-								items={courses}
-							/>
-						</div>
+						{Object.keys(dropdownLs).map((key) => (
+
+							<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
+								<h4 className="text-right font-medium  pt-1">
+									{key}
+								</h4>
+								<Dropdown
+									selected={dropdownLs[key].selected}
+									setSelected={dropdownLs[key].setSelected}
+									items={dropdownLs[key].items}
+								/>
+							</div>
+						))}
+
 						<div className="grid grid-cols-1 gap-4 lg:col-span-2 lg:grid-cols-2 mt-5">
 							<h4 className="text-right font-medium pt-1">
 								International Student
@@ -366,10 +370,8 @@ const Combination = (props) => {
 					</div>
 				</div>
 			) : (
-				<div>
-					<Results comb={{ majors, minors, honors }} data={schedule} courses={courses}/>
-					
-				</div>
+				<Results comb={{ majors, minors, honors }} data={schedule} courses={courses} />
+
 			)}
 			<Footer />
 		</div>
